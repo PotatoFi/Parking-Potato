@@ -1,6 +1,3 @@
-
-// Car Parkinator 2.3
-
 #include <EEPROM.h>
 
 #define debug false
