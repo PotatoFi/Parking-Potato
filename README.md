@@ -1,4 +1,4 @@
-# Car-Parkinator
+# Car Parkinator
 <p>Simple Arduino-based device that helps you park your car in the garage. It has a total range of 21 feet, is push-button configurable, and features 3 LED's:</p>
 * Green, which just lets the driver know that the thing is working, I guess
 * Yellow, which tells the driver they have ~12 inches until they need to stop
