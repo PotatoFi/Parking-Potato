@@ -1,25 +1,25 @@
 #include <EEPROM.h>
 
-#define debug false
+#define debug false            // Set to "true" to enable serial debugging
 
-const int redLED = 5;         // Red LED, pin 5
+const int redLED = 5;          // Red LED, pin 5
 const int greenLED = 6;        // Green LED, pin 7
 const int yellowLED = 7;       // Yellow LED, pin 6
-const int echoPin = 8;        // Echo, pin 8
-const int triggerPin = 9;     // Trigger, pin 9
-const int buttonPin = 11;       // Button, pin 11 (blue wire)
+const int echoPin = 8;         // Echo, pin 8
+const int triggerPin = 9;      // Trigger, pin 9
+const int buttonPin = 11;      // Button, pin 11
 
 int stop = 24;                 // Default stop distance of 24 inches
 int warning = 12;              // Define the warning distance
 int buttonState = 0;           // Tracks the state of the button
 
-long duration;         // Define duration and inches variables
-int inches; // Define variable for inches
+long duration;                 // Define duration and inches variables
+int inches;                    // Define variable for inches
 
 void setup() {
-  
+
   if(debug) Serial.begin (9600); // Serial monitor for development
-  
+
   // Define inputs and outputs
   pinMode(triggerPin, OUTPUT);
   pinMode(echoPin, INPUT);
@@ -28,8 +28,8 @@ void setup() {
   pinMode(greenLED, OUTPUT);
   pinMode(buttonPin, INPUT);
 
-  if (EEPROM.read(0) != 24) {
-   stop = EEPROM.read(0);
+  if (EEPROM.read(0) != 24) { // Compare stored distance with default
+   stop = EEPROM.read(0);     // Copy stored distance to stop
   }
 
 }
@@ -39,7 +39,7 @@ void getDistance() {
   delayMicroseconds(5);
   digitalWrite(triggerPin, HIGH); // Trigger the rangefinder
   delayMicroseconds(10);
-  digitalWrite(triggerPin, LOW); 
+  digitalWrite(triggerPin, LOW);
 
   duration = pulseIn(echoPin, HIGH); // Measure the reply pulse from the rangefinder
 
@@ -59,18 +59,18 @@ void confirmSetting(){
 
 void loop() {
   // Watch the button for a press, and set the distance
-  
+
   buttonState = digitalRead(buttonPin); // Check the state of the botton and store it
 
   if (buttonState == HIGH) { // If the button is pressed, set the new stop distance
     getDistance();
     stop = inches; // Copy current distance to stop distance
     EEPROM.write(0,stop); // Save new setting to EEPROM
-   
+
     confirmSetting(); // Blink the LEDs 3 times to confirm save
     confirmSetting();
     confirmSetting();
-    
+
     // Serial monitor for development
     if(debug)
     {
@@ -83,14 +83,14 @@ void loop() {
       Serial.print(EEPROM.read(0));
       Serial.println();
     }
-    
-    
+
+
   }
 
   else { // If the button isn't pressed, check the distance
-  
+
     getDistance();
-  
+
     // Serial monitor for development
     if(debug)
     {
@@ -98,22 +98,22 @@ void loop() {
     Serial.print(" inches");
     Serial.println();
     }
- 
-  
+
+
     // Logic to decide which LED to light.
-    
+
     if (inches <= stop) {
-        digitalWrite(greenLED, LOW); 
+        digitalWrite(greenLED, LOW);
         digitalWrite(yellowLED, LOW);
         digitalWrite(redLED, HIGH);   // Red LED ON
     }
-  
+
     if ((inches > stop) && (inches <= stop + warning)) {
         digitalWrite(greenLED, LOW);
         digitalWrite(yellowLED, HIGH); // Yellow LED ON
         digitalWrite(redLED, LOW);
     }
-  
+
     if (inches > stop + warning) {
         digitalWrite(greenLED, HIGH); // Green LED ON
         digitalWrite(yellowLED, LOW);
