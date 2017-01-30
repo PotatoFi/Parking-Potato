@@ -5,4 +5,4 @@
 * Red, which tells the driver to stop now!
 
 <h1>Configuration</h1>
-<p>The device starts with a default "stop" distance of 24 inches. To configure a custom stop distance, park your car where you want it, and press but button. This will set a custom stop distance, and it will save it to the EEPROM, so the distance will persist after power failures.</p>
+<p>The device starts with a default "stop" distance of 24 inches. To configure a custom stop distance, park your car where you want it, and press the button. This will set a custom stop distance, and it will save it to the EEPROM, so the distance will persist after power failures.</p>
