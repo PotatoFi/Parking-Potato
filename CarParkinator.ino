@@ -3,8 +3,8 @@
 #define debug false            // Set to "true" to enable serial debugging
 
 const int redLED = 5;          // Red LED, pin 5
-const int greenLED = 6;        // Green LED, pin 7
-const int yellowLED = 7;       // Yellow LED, pin 6
+const int greenLED = 7;        // Green LED, pin 7
+const int yellowLED = 6;       // Yellow LED, pin 6
 const int echoPin = 8;         // Echo, pin 8
 const int triggerPin = 9;      // Trigger, pin 9
 const int buttonPin = 11;      // Button, pin 11
